@@ -76,7 +76,7 @@ So you want an error object? Well, all you need to do is this:
      @title=#<JsonApiErrors::Default::Title:0x007ff753941568>>
 ```
 
-A `JsonApiError::Error` implements `#call`. So to get a hash representation
+A `JsonApiErrors::Error` implements `#call`. So to get a hash representation
 of your error, which can be serialized into JSON, you need to send the `#call`
 message to your error object:
 
@@ -220,7 +220,7 @@ override either the `#to_s` or `#to_h`. (This project was built using Ruby 2.2.2
 
 The [Json API spec](http://jsonapi.org/format/#error-objects) mentions that all
 errors MUST have the keyword `errors` at the root. For this purpose there is
-`JsonApiError::ErrorCollection`. To get a fully qualified hash representation
+`JsonApiErrors::ErrorCollection`. To get a fully qualified hash representation
 of your error you can:
 
 ```ruby
