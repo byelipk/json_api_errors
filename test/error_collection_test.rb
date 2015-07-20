@@ -20,7 +20,7 @@ class JsonApiErrors::ErrorCollectionTest < Minitest::Test
 
     collection.add_error(error)
 
-    assert_includes collection, error, "error was not included in the collection"
+    assert_includes collection, error
   end
 
   def test_it_returns_errors_when_called
