@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["byelipk"]
   spec.email         = ["byelipk@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{A simple wrapper around the JsonAPI Error spec.}
+  spec.description   = %q{While building out a backend server I realized a needed a simple way to generate error responses in the JsonAPI format. So I made this library and decided to publish it as a gem. (It's my first!)}
+  spec.homepage      = "https://github.com/byelipk/json_api_errors"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
