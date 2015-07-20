@@ -1,8 +1,38 @@
 # JsonApiErrors
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/json_api_errors`. To experiment with that code, run `bin/console` for an interactive prompt.
+Handling errors gracefully is pretty awesome.
 
-TODO: Delete this and the text above, and describe your gem
+I was having a hard time at that and so one of the steps I took was to create a simple
+error object, one that adhered to the JsonAPI Error spec, not coupled to any other
+library.
+
+Not all errors need to be handled gracefully, but for those that do its nice to
+see a response formatted in a way like it doesn't feel your world is
+crashing down (even though it is!):
+
+```json
+{
+  "errors": [
+    {
+      "id": "10002",
+      "status": "400",
+      "links": {
+        "about": "www.info-about-the-error.org"
+      },
+      "code": "Bad Request",
+      "title": "Your request didn't have a title attribute.",
+      "detail": "Oopps! You'll need to add a title before you can proceed.",
+      "source": {
+        "pointer": "/data/attribute/title",
+        "parameter": "title"
+      },
+      "meta": {
+        "extra_info": "Here's a lollypop!"
+      }
+    }
+  ]
+}
+```
 
 ## Installation
 
@@ -38,4 +68,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
