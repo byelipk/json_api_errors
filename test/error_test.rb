@@ -46,37 +46,20 @@ class JsonApiErrors::ErrorTest < Minitest::Test
     end
   end
 
-  class NonDefaultId
-    def to_s
-      "non-default-id"
+  STRING_METHODS = %i[ id status code title detail ]
+
+  STRING_METHODS.each do |property|
+    custom_class = Class.new(BasicObject) do
+      define_method(:to_s) { "non-default-#{property}" }
     end
-  end
 
-  def test_it_can_be_injected_with_custom_id
-    error  = JsonApiErrors::Error.new( id: NonDefaultId.new )
-    assert_equal "non-default-id", error.id.to_s
-  end
+    define_method("test_it_can_be_instantiated_with_custom_#{property}") do
+      error = JsonApiErrors::Error.new do |config|
+        config.public_send("#{property}=", custom_class.new)
+      end
 
-  class NonDefaultStatus
-    def to_s
-      "non-default-status"
+      assert_equal "non-default-#{property}", error.public_send(property).to_s
     end
-  end
-
-  def test_it_can_be_injected_with_custom_status
-    error  = JsonApiErrors::Error.new( status: NonDefaultStatus.new )
-    assert_equal "non-default-status", error.status.to_s
-  end
-
-  class NonDefaultCode
-    def to_s
-      "non-default-code"
-    end
-  end
-
-  def test_it_can_be_injected_with_custom_code
-    error  = JsonApiErrors::Error.new( code: NonDefaultCode.new )
-    assert_equal "non-default-code", error.code.to_s
   end
 
   class NonDefaultLinks
@@ -90,28 +73,6 @@ class JsonApiErrors::ErrorTest < Minitest::Test
   def test_it_can_be_injected_with_custom_links
     error  = JsonApiErrors::Error.new( links: NonDefaultLinks.new )
     assert_equal "non-default-links", error.links.to_h[:about]
-  end
-
-  class NonDefaultTitle
-    def to_s
-      "non-default-title"
-    end
-  end
-
-  def test_it_can_be_injected_with_custom_title
-    error  = JsonApiErrors::Error.new( title: NonDefaultTitle.new )
-    assert_equal "non-default-title", error.title.to_s
-  end
-
-  class NonDefaultDetail
-    def to_s
-      "non-default-detail"
-    end
-  end
-
-  def test_it_can_be_injected_with_custom_detail
-    error  = JsonApiErrors::Error.new( detail: NonDefaultDetail.new )
-    assert_equal "non-default-detail", error.detail.to_s
   end
 
   class NonDefaultSource
