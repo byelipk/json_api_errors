@@ -1,12 +1,6 @@
-require "json_api_errors/default/id"
-require "json_api_errors/default/code"
-require "json_api_errors/default/status"
-require "json_api_errors/default/title"
-require "json_api_errors/default/detail"
-require "json_api_errors/default/links"
-require "json_api_errors/default/source"
-require "json_api_errors/default/meta"
-require "json_api_errors/default/error"
+require "json_api_errors/template"
+require "json_api_errors/templates/default"
+require "forwardable"
 
 # JsonApiErrors::Error
 # ====================
@@ -94,37 +88,31 @@ require "json_api_errors/default/error"
 # Classes that define links, source, and meta must implement #to_h.
 #
 
+
 module JsonApiErrors
   class Error
 
-    attr_accessor :error, :id, :status, :links, :code, :title, :detail,
-                  :source, :meta
+    extend Forwardable
 
-    def initialize( error:  JsonApiErrors::Default::Error.new,
-                    id:     JsonApiErrors::Default::Id.new,
-                    status: JsonApiErrors::Default::Status.new,
-                    code:   JsonApiErrors::Default::Code.new,
-                    links:  JsonApiErrors::Default::Links.new,
-                    title:  JsonApiErrors::Default::Title.new,
-                    detail: JsonApiErrors::Default::Detail.new,
-                    source: JsonApiErrors::Default::Source.new,
-                    meta:   JsonApiErrors::Default::Meta.new )
+    attr_accessor :template
 
-      @error   = error
-      @id      = id
-      @status  = status
-      @code    = code
-      @links   = links
-      @title   = title
-      @detail  = detail
-      @source  = source
-      @meta    = meta
+    def initialize(template: JsonApiErrors::Template::Default.new)
+      @template = template
 
       yield(self) if block_given?
     end
 
+    def_delegators :template, :id,
+                              :status,
+                              :code,
+                              :links,
+                              :title,
+                              :detail,
+                              :source,
+                              :meta
+
     def call
-      error.call(self)
+      template.call
     end
 
     def status_code
