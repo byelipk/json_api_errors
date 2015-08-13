@@ -1,4 +1,4 @@
 module JsonApiErrors
-  module Template
+  module Templates
   end
 end

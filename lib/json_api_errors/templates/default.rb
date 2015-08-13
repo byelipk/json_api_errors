@@ -1,5 +1,5 @@
 module JsonApiErrors
-  module Template
+  module Templates
     class Default
       def call
         {
