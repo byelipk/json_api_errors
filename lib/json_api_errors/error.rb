@@ -32,21 +32,12 @@ module JsonApiErrors
       @template = template
     end
 
-    def_delegators :template, :id,
-                              :status,
-                              :code,
-                              :links,
-                              :title,
-                              :detail,
-                              :source,
-                              :meta
-
     def call
-      template.call
+      @cached_error ||= template.call
     end
 
     def status_code
-      status.to_s
+      call[:status]
     end
   end
 end
