@@ -8,6 +8,8 @@ module JsonApiErrors
 
     def add_error(error)
       self << error
+
+      self
     end
 
     def call
