@@ -33,11 +33,11 @@ module JsonApiErrors
     end
 
     def call
-      @cached_error ||= template.call
+      template.render
     end
 
     def status_code
-      call[:status]
+      template.status
     end
   end
 end

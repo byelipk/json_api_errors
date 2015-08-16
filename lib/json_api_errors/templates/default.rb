@@ -1,7 +1,7 @@
 module JsonApiErrors
   module Templates
     class Default
-      def call
+      def render
         {
           id:     id,
           status: status,
@@ -49,7 +49,7 @@ module JsonApiErrors
 
       def meta
         {
-          meta: "default-meta"
+          about: "default-meta"
         }
       end
     end
